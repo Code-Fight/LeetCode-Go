@@ -1,4 +1,4 @@
-package code
+package s2
 
 import (
 	"strconv"
