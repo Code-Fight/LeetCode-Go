@@ -35,13 +35,16 @@ func hasPathSum(root *TreeNode, sum int) bool {
 		return false
 	}
 
+	// 如果 左右节点都为nil
+	// 说明是叶子节点了
 	if root.Right == nil && root.Left == nil {
 
 		return sum==root.Val
 	}
 
-
-	return  hasPathSum(root.Right, sum-root.Val)  ||hasPathSum(root.Left, sum-root.Val)
+	// 用sum - val 的方法可以省去一遍和变量的空间
+	// 同时往左右两边走 并判断 任意一遍为true 即成功找到目标值
+	return  hasPathSum(root.Right, sum-root.Val)  || hasPathSum(root.Left, sum-root.Val)
 
 
 }

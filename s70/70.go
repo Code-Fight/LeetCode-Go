@@ -24,6 +24,10 @@ package s70
 3.  2 阶 + 1 阶
 
 思路：
+
+能走到最后一层，只可能从倒数第二层或者倒数第一层上来，
+所以最后一层到达的方案就是 前两层到达方案的合
+
 很简单的题目
 最简单的解法是直接递归 f(n)=f(n-1)+f(n-2)
 
@@ -36,24 +40,27 @@ package s70
 
 func climbStairs(n int) int {
 
+	// 首先处理边界
 	if n==0{
 		return 0
 	}
 	if n ==1{
 		return 1
 	}
-	if n ==2 {
-		return 2
+
+	// 第一层 是 1
+	// 第二层也是 1
+	// 到第三层有1+1 2中方法
+	s1 := 1
+	s2 := 1
+	s3 := 2
+
+	// 这里注意从2开始 但是要小于等于n
+	// 因为求的是第n层
+	for i:=2; i <= n;i++{
+		s3 = s1 + s2
+		s1 = s2
+		s2 = s3
 	}
-	last_1:=2
-	last_2:=1
-	count:=last_1+last_2
-	for n>3 {
-		temp := last_1
-		last_1= count
-		count+=temp
-		last_2=temp
-		n--
-	}
-	return count
+	return s3
 }

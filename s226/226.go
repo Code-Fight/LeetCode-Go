@@ -36,6 +36,8 @@ func invertTree(root *TreeNode) *TreeNode {
 	if root==nil{
 		return nil
 	}
+
+	// 不是nil 就继续往下走，深度优先
 	if root.Left!=nil{
 		invertTree(root.Left)
 	}
@@ -44,6 +46,7 @@ func invertTree(root *TreeNode) *TreeNode {
 		invertTree(root.Right)
 	}
 
+	// 翻转左右节点 哪怕是nil
 	root.Left,root.Right = root.Right,root.Left
 
 	return root

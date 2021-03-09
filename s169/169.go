@@ -13,29 +13,32 @@ hashtable+打擂台 O(n)
 摩尔投票的意思：遇到相同的就加1，遇到不同的就减1，减到0就重新换个数开始计数，总能找到最多的那个
 
 */
+/*
+//hashtable 打擂台的解法
+func majorityElement(nums []int) int {
+	all := make(map[int]int)
+	max :=0
+	maxVal :=0
+	for _,v:= range nums{
 
-//hashtable
-//func majorityElement(nums []int) int {
-//	all := make(map[int]int)
-//	max :=0
-//	maxVal :=0
-//	for _,v:= range nums{
-//
-//
-//		all[v]+=1
-//		if v ==maxVal{
-//			max++
-//		}else {
-//			if all[v]>max{
-//				max = all[v]
-//				maxVal = v
-//			}
-//		}
-//
-//	}
-//	return maxVal
-//}
+		// 每次遍历到 就直接加 1
+		all[v]+=1
+		// 如果当前元素 跟 目前最大的值一样，就继续投票
+		if v ==maxVal{
+			max++
+		}else {
+			// 否则 需要判断 当前 v 出现的次数，是否大于max
+			// 大于就将maxval 换成v 出现的次数max 换成all[v]即可
+			if all[v]>max{
+				max = all[v]
+				maxVal = v
+			}
+		}
 
+	}
+	return maxVal
+}
+*/
 //摩尔投票
 func majorityElement(nums []int) int {
 	max :=0

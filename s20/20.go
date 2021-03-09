@@ -26,6 +26,7 @@ package s20
 
 func P20(s string) bool {
 
+	// 先判断两边的边界
 	if len(s) ==0{
 		return true
 	}
@@ -33,30 +34,44 @@ func P20(s string) bool {
 		return false
 	}
 
+	// 构造一个map 方便快速找到右括号对应的左括号
+	// 方便后面去找对应的左括号
 	symbol := map[byte]byte {
 		')' : '(',
 		']' : '[',
 		'}' : '{',
 	}
 
+	// 读到所有的左括号
 	var leftString []byte
 
 	for  _,value:=range s{
-
+		// 0x7B 0x5B 0x28 是上面那几个左括号
 		if byte(value)==0x7B ||byte(value)==0x5B || byte(value)==0x28 {
 			leftString = append(leftString,byte(value))
 		}else {
+			// 找左括号对应的右括号
+			if needstr,ok:=symbol[byte(value)];ok {
+				temp := leftString
 
-			if needstr,ok:=symbol[byte(value)];ok{
-				temp:=leftString
-				if len(temp)-1<0||(temp[len(temp)-1])!=needstr{
+				// 如果 leftString 长度为0
+				// 或者 最后一个字符不是我们需要左括号 也就是皮配不上
+				// 直接结束 false
+				if len(temp)-1 < 0 || (temp[len(temp)-1]) != needstr {
 					return false
 				}
-				leftString=leftString[:len(temp)-1]
+
+				// 删掉一个最后加入的
+				// 然后继续遍历查看后面的
+				leftString = leftString[:len(temp)-1]
 			}
 
 		}
+
 	}
+	// 遍历s结束后
+	// 如果 还有没匹配上的左括号
+	// 说明 没有匹配
 	if len(leftString)!=0{
 		return false
 	}

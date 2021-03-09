@@ -44,6 +44,10 @@ func minDepth(root *TreeNode) int {
 }
 
 func minDepthLoop(curDepth int, node *TreeNode)  {
+	// 左右都为nil 说明到了叶子节点
+	// 然后 判断当前的深度是否比最小的深度小
+	// 如果小，说明当前路径更短 就保存
+	// 否则，直接return
 	if node.Right ==nil  && node.Left ==nil{
 		if minD ==-1 || minD >curDepth{
 			minD = curDepth
@@ -51,6 +55,7 @@ func minDepthLoop(curDepth int, node *TreeNode)  {
 		return
 	}
 	// 剪枝
+	// 如果当前深度大于 最小深度 就没有继续查找下去的必要
 	if minD!=-1 && curDepth>minD{
 		return
 	}

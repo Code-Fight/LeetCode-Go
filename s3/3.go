@@ -37,19 +37,25 @@ func lengthOfLongestSubstring(s string) int {
 		return 0
 	}
 	lastMax :=map[uint8]int{}
+	// 用来记录最大的长度
 	lastMaxVal :=0
-
+	// 不重复开始的地方
 	startIndex :=0
+
 
 	for endIndex:=0 ;endIndex<len(s);endIndex++{
 
+		// 从map中查找该字符是否存在
+		// 如果存在，就判断key对应的val和当前startIndex哪个大，保留大的
+		// 因为大的那个肯定是出现在后面的，后面的代表重复字符的最后一个
 		if v,ok:=lastMax[s[endIndex]];ok{
 			startIndex = int(math.Max(float64(startIndex),float64(v)))
 		}
 
 
-
+		// 对比最新的不重复串长度 和 之前的最大长度 哪个大 保留 长的
 		lastMaxVal = int(math.Max(float64(lastMaxVal),float64(endIndex- startIndex +1)))
+		// 更新当前的最大不重复串的其实位置  就是当前s的endIndex，并把这个作为key 保存到map中，方便后面再次对比
 		lastMax[s[endIndex]]=endIndex+1
 	}
 	return lastMaxVal

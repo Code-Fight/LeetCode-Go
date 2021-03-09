@@ -34,7 +34,14 @@ package s110
 思路：
 首先要确定什么是高度平衡二叉树：一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。
 
-用递归，将整个树的求解结果，拆分为每个子树的结果，然后先获得子树的高度，判定是否符合高度，如果大于1那么直接return -1 实现快速剪枝来结束循环
+用递归，将整个树的求解结果，拆分为每个子树的结果，
+每递归一层，高度要加1，最后一层是0
+然后先获得子树的高度，
+判定是否符合高度，如果大于1说明该子树不平衡，
+那么那么直接return -1  结束
+
+
+实现快速剪枝来结束循环
 
 */
 
@@ -66,16 +73,20 @@ func balanceLoop(nood *TreeNode) float64 {
 	if nood ==nil {
 		return 0
 	}
+	// 判断左边
 	left :=balanceLoop(nood.Left)
 	// 剪枝
 	if left==-1	{
 		return -1
 	}
+
+	// 判断右边
 	right :=balanceLoop(nood.Right)
 	if right ==-1{
 		return -1
 	}
 
+	// 如果左右差大于1 说明不平衡
 	if math.Abs(left-right) >1 {
 		return -1
 	}else {
