@@ -41,6 +41,8 @@ func isSymmetric(root *TreeNode) bool {
 
 
 func isMirror(left *TreeNode, right *TreeNode) bool{
+
+	// 两个几点都为nil 说明相同
 	if left == nil && right==nil{
 		return true
 	}
@@ -48,5 +50,6 @@ func isMirror(left *TreeNode, right *TreeNode) bool{
 		return false
 	}
 
+	// 同时判断左右节点必须都为true 才可以为true
 	return isMirror(left.Left,right.Right) && isMirror(left.Right,right.Left) && left.Val ==right.Val
 }

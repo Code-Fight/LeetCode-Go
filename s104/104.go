@@ -32,6 +32,12 @@ type TreeNode struct {
 }
 
 func maxDepth(root *TreeNode) int {
+	// 深度优先的递归
+	// 就是只要节点不是nil 就往下走
+	// 那么 只要遍历到nil的几点就返回0
+	// 不是nil的节点，继续遍历
+	// 同时，遍历完成会收到两个深度的返回值，
+	// 取其中大的返回值即可
 	if root ==nil{
 		return 0
 	}else {

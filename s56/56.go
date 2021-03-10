@@ -30,17 +30,27 @@ import (
 func merge(intervals [][]int) [][]int {
 
 	// sort
+	// 按照区间的第一个元素进行排序
 	sort.Slice(intervals, func(i, j int) bool {
 		return intervals[i][0]<intervals[j][0]
 	})
+
 	merged :=[][]int{}
-	for _,v:=range intervals{
-		if len(merged)==0 || v[0]>merged[len(merged)-1][1]{
+
+
+	for _,v:=range intervals {
+
+		// 处理边界，第一个区间直接进merged
+		// 如果当前区间的左值（最小值）大于 已经合并过的（merged）的最大值，那直接加进数组中
+		// 否则，说明当前 v 和 merged 的最后一个有区间的重合
+		if len(merged) == 0 || v[0] > merged[len(merged)-1][1] {
 			merged = append(merged, v)
-		}else {
-			lastVal :=merged[len(merged)-1][1]
+		} else {
+			// 有区间重合的元素，需要处理区间的右值，为当前元素的右值，或merged最后一个元素的右值
+			// 所以，比较大小 并 赋值即可
+			lastVal := merged[len(merged)-1][1]
 			//这里需要取一个两者的大值来作为右数值
-			merged[len(merged)-1][1] =int(math.Max(float64(lastVal),float64(v[1])) )
+			merged[len(merged)-1][1] = int(math.Max(float64(lastVal), float64(v[1])))
 		}
 
 	}

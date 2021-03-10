@@ -1,4 +1,7 @@
 package s39
+
+import "sort"
+
 /*
 
 给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
@@ -37,7 +40,7 @@ def backtrack(路径, 选择列表):
     if 满足结束条件:
         result.add(路径)
         return
-​
+
     for 选择 in 选择列表:
         做选择
         backtrack(路径, 选择列表)
@@ -46,36 +49,27 @@ def backtrack(路径, 选择列表):
 */
 
 func combinationSum(candidates []int, target int) [][]int {
-	if len(candidates) ==0{
-		return nil
-	}
-
-	ret := [][]int{}
-	path :=[]int{}
-
-	_dfs(&ret,path,candidates,target)
-	return ret
+	// 先排序，为了剪枝
+	sort.Ints(candidates)
+	res := [][]int{}
+	dfs(candidates, nil, target, 0, &res)//深度优先
+	return res
 }
 
-func _dfs(ret *[][]int,path []int,candidates []int, target int)  {
-	if target == 0{
-		tmp := make([]int,len(path))
-		copy(tmp,path)
-		*ret = append(*ret,tmp)
+func dfs(candidates, nums []int, target, left int, res *[][]int) {
+	// 结束递归
+	if target == 0 {
+		tmp := make([]int, len(nums))
+		copy(tmp, nums)
+		*res = append(*res, tmp)
 		return
 	}
 
-	if target >0 {
-		for _,v :=range candidates{
-			//需要做一下剪枝，如果当前的值比队列中的最后一个值大，则跳过
-			if len(path)>0 && v >path[len(path)-1]{
-				continue
-			}
-
-			path = append(path, v)
-			_dfs(ret,path,candidates,target-v)
-			path = path[:len(path)-1]
+	for i := left; i < len(candidates); i++ {// left限定，形成分支
+		if target < candidates[i] { //剪枝
+			return
 		}
+		// 直接组合append(nums, candidates[i]) 就不需要撤销了
+		dfs(candidates, append(nums, candidates[i]), target-candidates[i], i, res)//分支
 	}
-
 }
