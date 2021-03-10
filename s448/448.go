@@ -1,7 +1,7 @@
 package s448
 
 /*
-给定一个范围在  1 ≤ a[i] ≤ n ( n = 数组大小 ) 的 整型数组，数组中的元素一些出现了两次，另一些只出现一次。
+给定一个范围在 1 ≤ a[i] ≤ n (n = 数组大小 ) 的 整型数组，数组中的元素一些出现了两次，另一些只出现一次。
 
 找到所有在 [1, n] 范围之间没有出现在数组中的数字。
 
@@ -16,15 +16,15 @@ package s448
 [5,6]
 
 思路：
-最简单的版本就是做一个HashTable 然后就能快速的找出来了，但是需要浪费一点空间，并且
 
-优化的办法：
 遍历输入数组的每个元素一次。
-我们将把 |nums[i]|-1 索引位置的元素标记为负数。即 nums[|nums[i] |- 1] \times -1nums[∣nums[i]∣−1]×−1 。
+我们将把 |nums[i]|-1 索引位置的元素标记为负数。
+说明该位置有元素
 然后遍历数组，若当前数组元素 nums[i] 为负数，说明我们在数组中存在数字 i+1。
-https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/solution/zhao-dao-suo-you-shu-zu-zhong-xiao-shi-de-shu-zi-2/
 
-返回的时候，为了省内存，可以直接在原地操作。多建议一个哨兵index就可以了。
+如果，该位置的数字依然大于0，说明该位置+1的值没有出现
+
+然后，再遍历一遍，取出其中的负数的位置的索引加1即可
 
 */
 
@@ -32,19 +32,22 @@ import "math"
 
 func findDisappearedNumbers(nums []int) []int {
 
+	// 先遍历所有的数，并将对应的索引值变为赋值，
+	// 注意这里要取一下绝对值 因为有可能这个位置已经被别的索引改过了
 	for i:=0;i<len(nums);i++{
 
 		curr := int(math.Abs(float64(nums[i])))
 
+		// 将该位置得值 置为 负数
 		nums[curr-1] = int(math.Abs(float64(nums[curr-1])) * -1)
 
 	}
-	splitIndex :=0
+
+	ret := make([]int,0)
 	for i:=0;i<len(nums);i++{
 		if nums[i]>0{
-			nums[splitIndex] = i+1
-			splitIndex++
+			ret = append(ret, i+1)
 		}
 	}
-	return nums[:splitIndex]
+	return ret
 }

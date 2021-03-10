@@ -26,20 +26,19 @@ package s461
 利用二进制计算的特性，异或，相同的位为0，不同的位为1，那么再把结果转二进制字符串，然后看有多少个1就可以了
 */
 
-import "strconv"
-
 
 func hammingDistance(x int, y int) int {
-	num := x^y
-	s:=0
-	for ;num > 0 ; num /= 2 {
-		lsb := num % 2
-		// strconv.Itoa() 将数字强制性转化为字符串
-		if strconv.Itoa(lsb) =="1"{
-			s++
+	// 利用异或的性质,(相同为0,不同为1),
+	// 得到一个新的二进制数,
+	// 下一步需要把这个二进制数中的1进行统计.
+	i := x ^ y
+	count := 0   //定义数量的初始值为0
+	for i != 0 { //只要i不为0,那就继续循环
+		if (i & 1) == 1 { //如果i和1相与,值为1的话就count++
+			count++
 		}
-
+		i = i >> 1 //i右移一位
 	}
-	return s
+	return count
 
 }

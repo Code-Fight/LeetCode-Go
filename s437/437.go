@@ -29,7 +29,8 @@ root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
 
 
 思路：
-暴力解法：每个子节点都可以作为起点去寻找sum，所以 递归每个子节点
+暴力解法：
+每个子节点都可以作为起点去寻找sum，所以 递归每个子节点
 */
 
 type TreeNode struct {
@@ -64,6 +65,7 @@ func pathSumLoop(node *TreeNode, sum int) int {
 	cur :=0
 
 	// 因为不限制起点和结束的节点，那么必须在找到一个节点之后，继续往后走，如果当前节点不是sum那么cur就是0
+	// 每次递归都是sum减去当前的val
 	if node.Val ==sum{
 		cur = 1
 	}

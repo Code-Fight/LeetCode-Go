@@ -24,18 +24,23 @@ func moveZeroes(nums []int)  {
 	slowIndex :=0
 	fastIndex :=0
 
+	// 使用快慢指针 如果快指针大于等于数组的长度了
+	// 说明没得交换了
 	for  fastIndex<len(nums){
 
-
+		// 如果慢指针不是 0 快慢指针都前进
 		if nums[slowIndex] !=0{
 			slowIndex++
 			fastIndex++
 		}else {
-
-
+			// 否则说明慢指针是0，要分情况处理
+			// 如果快指针是0 ，那么要越过去
 			if nums[fastIndex] ==0{
 				fastIndex ++
 			}else {
+				// 如果快指针不是0 就交换快慢指针的值
+				// 交换完，代表当前的数字肯定不是0
+				// 那继续处理下一个字符
 				nums[fastIndex],nums[slowIndex]=nums[slowIndex],nums[fastIndex]
 			}
 		}
