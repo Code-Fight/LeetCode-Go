@@ -28,12 +28,20 @@ func canJump(nums []int) bool {
 	maxJump :=nums[0]
 
 	for i :=0; i<len(nums) ;i++{
+		// 结束条件，只要最远能跳到的距离能和数组长度相等
+		// 说明能到
 		if maxJump == len(nums){
 			return true
 		}
+
+		// 如果当前位置 比 最远能到的距离大
+		// 说明前面所有的点加起来都到不了这个点
 		if i > maxJump{
 			return false
 		}
+
+		// 比较当前的点所能达到的距离(i 加上 i最大能调的距离 num[i])
+		// 与之前最远能跳的距离
 		maxJump =int( math.Max(float64(i+nums[i]),float64(maxJump)))
 	}
 

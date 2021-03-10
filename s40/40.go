@@ -44,6 +44,8 @@ func combinationSum2(candidates []int, target int) [][]int {
 	if len(candidates)==0{
 		return nil
 	}
+
+	//先排序 方便后面进行过滤重复的数据
 	sort.Ints(candidates)
 	ret :=[][]int{}
 	path :=[]int{}
@@ -61,8 +63,12 @@ func _dfs(ret *[][]int,path []int, candidates []int, target int)  {
 	if target>0{
 		for i,v :=range candidates{
 
-			//判断下面的值是否值得继续递归，如果都大了，就没必要了
-			if target< v{
+			// 判断下面的值是否值得继续递归，
+			// 如果都大了，就没必要了
+			// 因为之前已经升序排序了，
+			// 所以，如果当前的 v 都大
+			// 那么后面的肯定也大
+			if v > target{
 				return
 			}
 			//过滤重复的元素
